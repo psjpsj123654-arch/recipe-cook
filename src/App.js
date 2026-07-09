@@ -589,7 +589,7 @@ export default function App() {
 정확히 JSON 배열만 반환하세요 (다른 텍스트 없이). 형식:
 [{"name":"요리명(한국어)","description":"맛과 특징 한 줄 설명(한국어)","cuisine":"한식/중식/일식/양식/기타","time":"20분","difficulty":"쉬움","matchPercent":85,"availableIngredients":["있는 재료"],"missingIngredients":["없는 재료"],"substitutes":["대체 재료 설명(한국어)"],"steps":["1단계: 재료 손질 - 구체적인 크기와 양 포함(한국어)","2단계: 불 세기와 조리 시간 포함한 구체적 과정(한국어)","3단계: 양념 추가 및 간 맞추기(한국어)","4단계: 완성 및 담기(한국어)"],"shoppingList":["꼭 사야 할 재료"]}]
 
-규칙: 1)모든 텍스트 반드시 한국어만 사용 2)steps는 최소 4단계 이상, 각 단계마다 구체적 시간/온도/양 포함 3)3~4가지 요리 추천 4)matchPercent는 정수 5)difficulty는 "쉬움"/"보통"/"어려움" 중 하나`;
+규칙: 1)모든 텍스트 반드시 한국어만 사용, 외국어 절대 금지 2)steps는 최소 6~8단계로 각 단계마다 구체적인 시간/온도/양/불 세기를 상세히 설명 3)3~4가지 요리 추천 4)matchPercent는 정수 5)difficulty는 "쉬움"/"보통"/"어려움" 중 하나`;
 
     try {
       const apiKey = process.env.REACT_APP_GROQ_KEY;
