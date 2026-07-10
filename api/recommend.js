@@ -75,7 +75,7 @@ export default async function handler(req, res) {
       properties: {
         recipes: {
           type: "array",
-          maxItems: 3,
+          maxItems: 5,
           items: {
             type: "object",
             additionalProperties: false,
@@ -162,7 +162,7 @@ export default async function handler(req, res) {
             },
           ],
           temperature: 0.3,
-          max_completion_tokens: 2000,
+          max_completion_tokens: 3200,
           response_format: {
             type: "json_schema",
             json_schema: recipeSchema,
