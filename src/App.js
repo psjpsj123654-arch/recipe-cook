@@ -578,62 +578,31 @@ export default function App() {
     setLoading(true);
     setRecipes(null);
 
-    const prompt = `당신은 한국인을 위한 요리 전문가입니다. 반드시 모든 텍스트를 한국어로만 작성하세요. 영어, 일본어, 중국어 등 다른 언어는 절대 사용하지 마세요.
-
-이전 대화 내용이나 이전에 추천했던 요리는 완전히 무시하세요. 오직 지금 입력된 재료만을 기준으로 판단하세요. 반드시 실제로 존재하고 사람들이 실제로 자주 먹는 요리만 추천하세요. 재료 이름을 요리 이름에 직접 넣지 마세요 (예: "양파 계란 볶음" 같은 이름 금지). 입력된 재료가 메인 재료가 아니어도 되고 부재료로 들어가는 요리도 추천 가능합니다. 예를 들어 계란+양파가 있으면 계란찜, 오믈렛, 된장찌개, 부대찌개 등 실제 요리를 추천하세요.
-
-다음 재료로 만들 수 있는 요리를 추천해주세요.
-보유 재료: ${ingredients.join(", ")}
-기본 양념: ${seasonings.length > 0 ? seasonings.join(", ") : "기본 소금, 후추, 식용유 있음"}
-조리 시간 제한: ${cookTime}
-난이도 선호: ${difficulty}
-
-정확히 JSON 배열만 반환하세요 (다른 텍스트 없이). 형식:
-[{"name":"요리명(한국어)","description":"맛과 특징 한 줄 설명(한국어)","cuisine":"한식/중식/일식/양식/기타","time":"20분","difficulty":"쉬움","matchPercent":85,"availableIngredients":["있는 재료"],"missingIngredients":["없는 재료"],"substitutes":["대체 재료 설명(한국어)"],"steps":["1단계: 재료 손질 - 구체적인 크기와 양 포함(한국어)","2단계: 불 세기와 조리 시간 포함한 구체적 과정(한국어)","3단계: 양념 추가 및 간 맞추기(한국어)","4단계: 완성 및 담기(한국어)"],"shoppingList":["꼭 사야 할 재료"]}]
-
-규칙: 1)모든 텍스트 반드시 한국어만 사용, 외국어 절대 금지 2)steps는 최소 6~8단계로 각 단계마다 구체적인 시간/온도/양/불 세기를 상세히 설명 3)4가지 요리 추천 4)matchPercent는 정수 5)difficulty는 "쉬움"/"보통"/"어려움" 중 하나 6)추천하는 요리들은 서로 완전히 다른 종류여야 함 (예: 파스타류, 볶음류, 국물류, 구이류 등 카테고리가 겹치면 안됨) 7)비슷한 이름이나 비슷한 조리법의 요리를 중복 추천 절대 금지 8)입력된 재료를 활용할 수 있는 다양한 종류의 실제 요리를 추천할 것`;
-
     try {
-      const apiKey = process.env.REACT_APP_GROQ_KEY;
-      if (!apiKey) throw new Error("API 키가 없습니다. Vercel 환경변수를 확인해주세요.");
-
-      const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      const res = await fetch("/api/recommend", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: "llama-3.3-70b-versatile",
-          max_tokens: 2000,
-          messages: [{ role: "user", content: prompt }],
+          ingredients,
+          seasonings,
+          cookTime,
+          difficulty,
         }),
       });
 
+      const data = await res.json().catch(() => ({}));
+
       if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(`API 오류 ${res.status}: ${errData?.error?.message || res.statusText}`);
+        throw new Error(data?.error || `API 요청에 실패했습니다. (${res.status})`);
       }
 
-      const data = await res.json();
-
-      if (data.error) {
-        throw new Error(data.error.message || "API 응답 오류");
+      if (!Array.isArray(data.recipes)) {
+        throw new Error("추천 결과 형식이 올바르지 않습니다.");
       }
 
-      const text = data.choices?.[0]?.message?.content || "";
-      if (!text) throw new Error("응답이 비어있습니다.");
-
-      const clean = text.replace(/```json|```/g, "").trim();
-
-      // JSON 배열만 추출 (앞뒤 불필요한 텍스트 제거)
-      const jsonMatch = clean.match(/\[[\s\S]*\]/);
-      if (!jsonMatch) throw new Error("JSON 형식을 찾을 수 없습니다.");
-
-      const parsed = JSON.parse(jsonMatch[0]);
-      if (!Array.isArray(parsed)) throw new Error("배열 형식이 아닙니다.");
-
-      setRecipes(parsed);
+      setRecipes(data.recipes);
     } catch (e) {
       setError(`오류: ${e.message}`);
     } finally {
@@ -725,3 +694,4 @@ export default function App() {
     </>
   );
 }
+
