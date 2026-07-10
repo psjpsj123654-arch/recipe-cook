@@ -396,6 +396,33 @@ const styles = `
   .missing { color: #c0392b; }
   .missing .ingredient-dot { background: #e74c3c; }
  
+  .shopping-link {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    color: #c0392b;
+    text-decoration: none;
+    cursor: pointer;
+  }
+ 
+  .shopping-link:hover {
+    text-decoration: underline;
+  }
+ 
+  .shopping-link-icon {
+    flex-shrink: 0;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid ${ORANGE[200]};
+    border-radius: 2rem;
+    background: ${ORANGE[50]};
+    color: ${ORANGE[700]};
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+ 
   .step-list li {
     font-size: 0.9rem;
     padding: 0.5rem 0;
@@ -594,7 +621,20 @@ function RecipeCard({ recipe }) {
               <li key={i}><span className="ingredient-dot" />{i}</li>
             ))}
             {(recipe.missingIngredients || []).map((i) => (
-              <li key={i} className="missing"><span className="ingredient-dot" />⚠ {i} (부족)</li>
+              <li key={i} className="missing">
+                <span className="ingredient-dot" />
+                <a
+                  href={`https://search.shopping.naver.com/search/all?query=${encodeURIComponent(i)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shopping-link"
+                  onClick={(e) => e.stopPropagation()}
+                  title={`${i} 네이버쇼핑에서 검색`}
+                >
+                  <span>⚠ {i} (부족)</span>
+                  <span className="shopping-link-icon">🛒 장보기</span>
+                </a>
+              </li>
             ))}
           </ul>
  
