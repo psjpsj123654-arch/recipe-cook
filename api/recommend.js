@@ -58,11 +58,13 @@ export default async function handler(req, res) {
 - 실제로 널리 알려져 있고 사람들이 실제로 먹는 요리만 추천합니다.
 - 입력 재료를 억지로 결합한 창작 요리는 추천하지 않습니다.
 - 현재 입력 재료와 관련성이 낮은 요리는 제외합니다.
-- 가장 적합한 요리를 최대 5개 추천합니다.
-- 적합한 요리가 5개보다 적으면 억지로 개수를 채우지 않습니다.
+- 현재 입력 재료를 활용할 수 있는 실제 요리를 정확히 5개 추천합니다.
+- 다섯 요리는 이름과 조리 방식이 서로 겹치지 않도록 구성합니다.
 - 추천 요리끼리 이름과 조리 방식이 지나치게 겹치지 않게 합니다.
 - 없는 재료는 missingIngredients와 shoppingList에만 표시합니다.
-- 조리 단계는 요리당 4~5개로 간결하게 작성하되, 필요한 시간과 불 세기를 포함합니다.
+- 조리 단계는 요리당 6~7개로 매우 자세하게 작성합니다.
+- 각 단계에는 필요한 경우 재료의 양, 손질 크기, 불 세기, 조리 시간, 넣는 순서와 완성 판단 기준을 포함합니다.
+- 각 단계는 실제로 그대로 따라 요리할 수 있도록 구체적으로 작성합니다.
 - matchPercent는 보유 재료와 기본 양념을 기준으로 현실적으로 계산합니다.
 `;
 
@@ -75,6 +77,7 @@ export default async function handler(req, res) {
       properties: {
         recipes: {
           type: "array",
+          minItems: 5,
           maxItems: 5,
           items: {
             type: "object",
@@ -110,8 +113,8 @@ export default async function handler(req, res) {
               },
               steps: {
                 type: "array",
-                minItems: 4,
-                maxItems: 5,
+                minItems: 6,
+                maxItems: 7,
                 items: { type: "string" },
               },
               shoppingList: {
@@ -162,7 +165,7 @@ export default async function handler(req, res) {
             },
           ],
           temperature: 0.3,
-          max_completion_tokens: 3200,
+          max_completion_tokens: 6000,
           response_format: {
             type: "json_schema",
             json_schema: recipeSchema,
@@ -220,3 +223,4 @@ export default async function handler(req, res) {
     });
   }
 }
+
