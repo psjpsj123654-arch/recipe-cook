@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+ 
 const ORANGE = {
   50: "#FFF4ED",
   100: "#FFE4CC",
@@ -12,25 +12,25 @@ const ORANGE = {
   800: "#6E2500",
   900: "#3E1200",
 };
-
+ 
 const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap');
-
+ 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
   body {
     font-family: 'Pretendard', -apple-system, sans-serif;
     background: ${ORANGE[50]};
     min-height: 100vh;
     color: #1a1a1a;
   }
-
+ 
   .app {
     max-width: 860px;
     margin: 0 auto;
     padding: 0 1rem 4rem;
   }
-
+ 
   .hero {
     background: linear-gradient(135deg, ${ORANGE[500]} 0%, ${ORANGE[400]} 60%, ${ORANGE[300]} 100%);
     margin: 0 -1rem 2.5rem;
@@ -39,25 +39,25 @@ const styles = `
     color: white;
     text-align: center;
   }
-
+ 
   .hero-icon {
     font-size: 3rem;
     margin-bottom: 0.5rem;
   }
-
+ 
   .hero h1 {
     font-size: 1.9rem;
     font-weight: 700;
     letter-spacing: -0.02em;
     margin-bottom: 0.4rem;
   }
-
+ 
   .hero p {
     font-size: 1rem;
     opacity: 0.88;
     font-weight: 400;
   }
-
+ 
   .section-label {
     font-size: 0.78rem;
     font-weight: 600;
@@ -66,7 +66,7 @@ const styles = `
     color: ${ORANGE[600]};
     margin-bottom: 0.6rem;
   }
-
+ 
   .card {
     background: white;
     border-radius: 1rem;
@@ -74,7 +74,7 @@ const styles = `
     margin-bottom: 1rem;
     border: 1.5px solid ${ORANGE[100]};
   }
-
+ 
   .card-title {
     font-size: 1rem;
     font-weight: 600;
@@ -84,7 +84,7 @@ const styles = `
     align-items: center;
     gap: 0.5rem;
   }
-
+ 
   .tag-input-area {
     display: flex;
     flex-wrap: wrap;
@@ -97,12 +97,12 @@ const styles = `
     cursor: text;
     transition: border-color 0.15s;
   }
-
+ 
   .tag-input-area:focus-within {
     border-color: ${ORANGE[400]};
     background: white;
   }
-
+ 
   .tag {
     display: inline-flex;
     align-items: center;
@@ -114,7 +114,7 @@ const styles = `
     font-size: 0.85rem;
     font-weight: 500;
   }
-
+ 
   .tag button {
     background: none;
     border: none;
@@ -126,9 +126,9 @@ const styles = `
     display: flex;
     align-items: center;
   }
-
+ 
   .tag button:hover { color: ${ORANGE[700]}; }
-
+ 
   .tag-input {
     border: none;
     background: transparent;
@@ -138,11 +138,11 @@ const styles = `
     min-width: 100px;
     color: #1a1a1a;
   }
-
+ 
   .row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-
+ 
   .select-group { flex: 1; min-width: 140px; }
-
+ 
   select {
     width: 100%;
     padding: 0.6rem 0.9rem;
@@ -160,9 +160,9 @@ const styles = `
     background-position: right 0.75rem center;
     padding-right: 2.2rem;
   }
-
+ 
   select:focus { border-color: ${ORANGE[400]}; background-color: white; }
-
+ 
   .btn-main {
     width: 100%;
     padding: 0.85rem;
@@ -177,17 +177,17 @@ const styles = `
     letter-spacing: -0.01em;
     margin-top: 0.5rem;
   }
-
+ 
   .btn-main:hover { transform: translateY(-1px); box-shadow: 0 4px 16px ${ORANGE[300]}; }
   .btn-main:active { transform: translateY(0); }
   .btn-main:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
-
+ 
   .loading {
     text-align: center;
     padding: 3rem 1rem;
     color: ${ORANGE[500]};
   }
-
+ 
   .loading-spinner {
     width: 44px;
     height: 44px;
@@ -197,16 +197,16 @@ const styles = `
     animation: spin 0.8s linear infinite;
     margin: 0 auto 1rem;
   }
-
+ 
   @keyframes spin { to { transform: rotate(360deg); } }
-
+ 
   .results-header {
     font-size: 1.2rem;
     font-weight: 700;
     color: ${ORANGE[700]};
     margin-bottom: 1rem;
   }
-
+ 
   .recipe-card {
     background: white;
     border-radius: 1rem;
@@ -215,9 +215,9 @@ const styles = `
     margin-bottom: 1rem;
     transition: box-shadow 0.2s;
   }
-
+ 
   .recipe-card:hover { box-shadow: 0 4px 20px ${ORANGE[100]}; }
-
+ 
   .recipe-header {
     padding: 1.1rem 1.25rem 0.75rem;
     cursor: pointer;
@@ -226,29 +226,75 @@ const styles = `
     gap: 0.75rem;
     justify-content: space-between;
   }
-
+ 
   .recipe-header-left { flex: 1; }
-
+ 
   .recipe-name {
     font-size: 1.1rem;
     font-weight: 700;
     color: #1a1a1a;
     margin-bottom: 0.35rem;
   }
-
+ 
   .recipe-desc {
     font-size: 0.88rem;
     color: #666;
     line-height: 1.5;
   }
-
+ 
+  .recipe-name-links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.35rem;
+  }
+ 
+  .recipe-name-links .recipe-name { margin-bottom: 0; }
+ 
+  .recipe-link-buttons {
+    display: flex;
+    gap: 0.35rem;
+    flex-shrink: 0;
+  }
+ 
+  .recipe-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem 0.55rem;
+    border-radius: 2rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.15s, opacity 0.15s;
+  }
+ 
+  .recipe-link:hover {
+    transform: translateY(-1px);
+    opacity: 0.85;
+  }
+ 
+  .youtube-link {
+    background: #fde8e8;
+    color: #c0392b;
+    border: 1px solid #f5b7b1;
+  }
+ 
+  .naver-link {
+    background: #e6f7ec;
+    color: #16883e;
+    border: 1px solid #a9dfbf;
+  }
+ 
   .recipe-meta {
     display: flex;
     gap: 0.5rem;
     margin-top: 0.6rem;
     flex-wrap: wrap;
   }
-
+ 
   .badge {
     display: inline-flex;
     align-items: center;
@@ -258,21 +304,21 @@ const styles = `
     font-size: 0.78rem;
     font-weight: 600;
   }
-
+ 
   .badge-orange { background: ${ORANGE[100]}; color: ${ORANGE[700]}; }
   .badge-green { background: #e6f4ea; color: #2d7d46; }
   .badge-yellow { background: #fff8e1; color: #9a6c00; }
   .badge-red { background: #fde8e8; color: #c0392b; }
-
+ 
   .match-bar-wrap {
     margin-top: 0.6rem;
     display: flex;
     align-items: center;
     gap: 0.6rem;
   }
-
+ 
   .match-label { font-size: 0.78rem; color: #888; white-space: nowrap; }
-
+ 
   .match-bar {
     flex: 1;
     height: 6px;
@@ -280,16 +326,16 @@ const styles = `
     border-radius: 3px;
     overflow: hidden;
   }
-
+ 
   .match-fill {
     height: 100%;
     border-radius: 3px;
     background: linear-gradient(90deg, ${ORANGE[300]}, ${ORANGE[500]});
     transition: width 0.6s ease;
   }
-
+ 
   .match-pct { font-size: 0.82rem; font-weight: 700; color: ${ORANGE[600]}; min-width: 34px; text-align: right; }
-
+ 
   .chevron {
     font-size: 1.2rem;
     color: ${ORANGE[300]};
@@ -297,15 +343,15 @@ const styles = `
     flex-shrink: 0;
     margin-top: 0.1rem;
   }
-
+ 
   .chevron.open { transform: rotate(180deg); }
-
+ 
   .recipe-body {
     padding: 0 1.25rem 1.25rem;
     border-top: 1.5px solid ${ORANGE[50]};
     margin-top: 0.5rem;
   }
-
+ 
   .section-divider {
     margin: 1rem 0 0.6rem;
     font-size: 0.82rem;
@@ -315,19 +361,19 @@ const styles = `
     align-items: center;
     gap: 0.4rem;
   }
-
+ 
   .section-divider::after {
     content: '';
     flex: 1;
     height: 1px;
     background: ${ORANGE[100]};
   }
-
+ 
   .ingredient-list, .step-list {
     list-style: none;
     padding: 0;
   }
-
+ 
   .ingredient-list li {
     font-size: 0.88rem;
     padding: 0.3rem 0;
@@ -337,19 +383,19 @@ const styles = `
     gap: 0.4rem;
     color: #333;
   }
-
+ 
   .ingredient-list li:last-child { border-bottom: none; }
-
+ 
   .ingredient-dot {
     width: 6px; height: 6px;
     border-radius: 50%;
     background: ${ORANGE[300]};
     flex-shrink: 0;
   }
-
+ 
   .missing { color: #c0392b; }
   .missing .ingredient-dot { background: #e74c3c; }
-
+ 
   .step-list li {
     font-size: 0.9rem;
     padding: 0.5rem 0;
@@ -359,9 +405,9 @@ const styles = `
     line-height: 1.55;
     color: #333;
   }
-
+ 
   .step-list li:last-child { border-bottom: none; }
-
+ 
   .step-num {
     width: 22px; height: 22px;
     border-radius: 50%;
@@ -375,11 +421,11 @@ const styles = `
     flex-shrink: 0;
     margin-top: 0.1rem;
   }
-
+ 
   .sub-chips {
     display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.4rem;
   }
-
+ 
   .sub-chip {
     background: #fff3cd;
     color: #856404;
@@ -389,14 +435,14 @@ const styles = `
     border-radius: 2rem;
     border: 1px solid #ffe08a;
   }
-
+ 
   .shopping-section {
     background: ${ORANGE[50]};
     border-radius: 0.75rem;
     padding: 0.8rem 1rem;
     margin-top: 0.75rem;
   }
-
+ 
   .shopping-title {
     font-size: 0.82rem;
     font-weight: 700;
@@ -406,11 +452,11 @@ const styles = `
     align-items: center;
     gap: 0.3rem;
   }
-
+ 
   .shopping-items {
     display: flex; flex-wrap: wrap; gap: 0.35rem;
   }
-
+ 
   .shopping-item {
     background: white;
     border: 1.5px solid ${ORANGE[200]};
@@ -420,20 +466,20 @@ const styles = `
     padding: 0.2rem 0.6rem;
     border-radius: 2rem;
   }
-
+ 
   .empty-state {
     text-align: center;
     padding: 2.5rem 1rem;
     color: #aaa;
   }
-
+ 
   .empty-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
   .empty-state p { font-size: 0.9rem; }
 `;
-
+ 
 function TagInput({ tags, onChange, placeholder }) {
   const [input, setInput] = useState("");
-
+ 
   const add = (val) => {
     const trimmed = val.trim();
     if (trimmed && !tags.includes(trimmed)) {
@@ -441,7 +487,7 @@ function TagInput({ tags, onChange, placeholder }) {
     }
     setInput("");
   };
-
+ 
   const handleKey = (e) => {
     if (["Enter", ",", " "].includes(e.key)) {
       e.preventDefault();
@@ -450,9 +496,9 @@ function TagInput({ tags, onChange, placeholder }) {
       onChange(tags.slice(0, -1));
     }
   };
-
+ 
   const handleBlur = () => { if (input.trim()) add(input); };
-
+ 
   return (
     <div
       className="tag-input-area"
@@ -475,7 +521,7 @@ function TagInput({ tags, onChange, placeholder }) {
     </div>
   );
 }
-
+ 
 function MatchBar({ pct }) {
   const color = pct >= 80 ? "#2d7d46" : pct >= 50 ? "#C44600" : "#c0392b";
   return (
@@ -488,21 +534,47 @@ function MatchBar({ pct }) {
     </div>
   );
 }
-
+ 
 function RecipeCard({ recipe }) {
   const [open, setOpen] = useState(false);
-
+ 
   const diffBadge = {
     "쉬움": "badge-green",
     "보통": "badge-yellow",
     "어려움": "badge-red",
   }[recipe.difficulty] || "badge-orange";
-
+ 
   return (
     <div className="recipe-card">
       <div className="recipe-header" onClick={() => setOpen((v) => !v)}>
         <div className="recipe-header-left">
-          <div className="recipe-name">{recipe.name}</div>
+          <div className="recipe-name-links">
+            <span className="recipe-name">{recipe.name}</span>
+            <div className="recipe-link-buttons">
+              <a
+                href={`https://www.youtube.com/results?search_query=${encodeURIComponent(
+                  `${recipe.name} 레시피`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="recipe-link youtube-link"
+                onClick={(e) => e.stopPropagation()}
+              >
+                ▶ 유튜브
+              </a>
+              <a
+                href={`https://search.naver.com/search.naver?where=blog&query=${encodeURIComponent(
+                  `${recipe.name} 레시피`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="recipe-link naver-link"
+                onClick={(e) => e.stopPropagation()}
+              >
+                N 블로그
+              </a>
+            </div>
+          </div>
           <div className="recipe-desc">{recipe.description}</div>
           <div className="recipe-meta">
             <span className="badge badge-orange">⏱ {recipe.time}</span>
@@ -513,7 +585,7 @@ function RecipeCard({ recipe }) {
         </div>
         <span className={`chevron ${open ? "open" : ""}`}>▾</span>
       </div>
-
+ 
       {open && (
         <div className="recipe-body">
           <div className="section-divider">🧂 재료</div>
@@ -525,7 +597,7 @@ function RecipeCard({ recipe }) {
               <li key={i} className="missing"><span className="ingredient-dot" />⚠ {i} (부족)</li>
             ))}
           </ul>
-
+ 
           {(recipe.substitutes || []).length > 0 && (
             <>
               <div className="section-divider">🔄 대체 재료</div>
@@ -536,14 +608,14 @@ function RecipeCard({ recipe }) {
               </div>
             </>
           )}
-
+ 
           <div className="section-divider">👨‍🍳 조리 방법</div>
           <ol className="step-list">
             {(recipe.steps || []).map((s, i) => (
               <li key={i}><span className="step-num">{i + 1}</span><span>{s}</span></li>
             ))}
           </ol>
-
+ 
           {(recipe.shoppingList || []).length > 0 && (
             <div className="shopping-section">
               <div className="shopping-title">🛒 최소 장보기 목록</div>
@@ -559,7 +631,7 @@ function RecipeCard({ recipe }) {
     </div>
   );
 }
-
+ 
 export default function App() {
   const [ingredients, setIngredients] = useState([]);
   const [seasonings, setSeasonings] = useState([]);
@@ -568,7 +640,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [recipes, setRecipes] = useState(null);
   const [error, setError] = useState("");
-
+ 
   const handleSearch = async () => {
     if (ingredients.length === 0) {
       setError("재료를 최소 1개 이상 입력해주세요.");
@@ -577,7 +649,7 @@ export default function App() {
     setError("");
     setLoading(true);
     setRecipes(null);
-
+ 
     try {
       const res = await fetch("/api/recommend", {
         method: "POST",
@@ -591,17 +663,17 @@ export default function App() {
           difficulty,
         }),
       });
-
+ 
       const data = await res.json().catch(() => ({}));
-
+ 
       if (!res.ok) {
         throw new Error(data?.error || `API 요청에 실패했습니다. (${res.status})`);
       }
-
+ 
       if (!Array.isArray(data.recipes)) {
         throw new Error("추천 결과 형식이 올바르지 않습니다.");
       }
-
+ 
       setRecipes(data.recipes);
     } catch (e) {
       setError(`오류: ${e.message}`);
@@ -609,7 +681,7 @@ export default function App() {
       setLoading(false);
     }
   };
-
+ 
   return (
     <>
       <style>{styles}</style>
@@ -619,7 +691,7 @@ export default function App() {
           <h1>냉장고 털기 요리사</h1>
           <p>있는 재료로 뚝딱! AI가 딱 맞는 요리를 찾아드려요</p>
         </div>
-
+ 
         <div className="card">
           <div className="card-title">🥦 보유 재료 <span style={{fontSize:"0.78rem",fontWeight:400,color:"#999"}}>(입력 후 Enter 또는 쉼표)</span></div>
           <TagInput
@@ -628,7 +700,7 @@ export default function App() {
             placeholder="예: 계란, 양파, 두부, 돼지고기..."
           />
         </div>
-
+ 
         <div className="card">
           <div className="card-title">🧂 기본 양념</div>
           <TagInput
@@ -637,7 +709,7 @@ export default function App() {
             placeholder="예: 간장, 된장, 고추장, 마늘..."
           />
         </div>
-
+ 
         <div className="card">
           <div className="card-title">⚙️ 조건 설정</div>
           <div className="row">
@@ -661,20 +733,20 @@ export default function App() {
             </div>
           </div>
         </div>
-
+ 
         {error && <p style={{color:"#c0392b",fontSize:"0.88rem",marginBottom:"0.75rem",padding:"0 0.25rem"}}>{error}</p>}
-
+ 
         <button className="btn-main" onClick={handleSearch} disabled={loading}>
           {loading ? "🔍 요리 찾는 중..." : "🍽 요리 추천받기"}
         </button>
-
+ 
         {loading && (
           <div className="loading">
             <div className="loading-spinner" />
             <p>냉장고 안을 살펴보는 중이에요...</p>
           </div>
         )}
-
+ 
         {recipes && !loading && (
           <div style={{marginTop:"1.5rem"}}>
             <div className="results-header">✨ 추천 요리 {recipes.length}가지</div>
@@ -694,4 +766,4 @@ export default function App() {
     </>
   );
 }
-
+ 
